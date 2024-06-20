@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'calendar_page.dart';
 import 'daily_summary_page.dart';
+import 'navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+/*
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -54,4 +55,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
+}*/
