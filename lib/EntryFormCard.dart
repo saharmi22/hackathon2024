@@ -28,7 +28,7 @@ class _EntryFormCardInitState extends State<EntryFormCardInit> {
                   child: Text("Today: $day/$month/$year", style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                 ),
               ),
-              const Text("How are you feeling today?", style: const TextStyle(fontSize: 20)),
+              const Text("How are you feeling today?", style: TextStyle(fontSize: 20)),
             ]
           ),
         ),

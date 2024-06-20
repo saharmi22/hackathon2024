@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon2024/EntryFormCard.dart';
+import 'package:hackathon2024/EntryFormTile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,14 +18,21 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Recent Entries"),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           children: <Widget>[
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(10.0),
               child: EntryFormCardInit(),
             ),
-            // todo: add list of small entries here
+             Padding(
+              padding: EdgeInsets.all(10.0),
+              child: EntryFormTile(date: "12/12/2021"),
+            ),
+             Padding(
+              padding: EdgeInsets.all(10.0),
+              child: EntryFormTile(date: "11/12/2021"),
+            ),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hackathon2024/Clear.dart';
-import 'package:hackathon2024/homePage.dart';
+import 'package:hackathon2024/Heart.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: HeartRateHRVScreen(),
     );
   }
 }
