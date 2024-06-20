@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon2024/Heart.dart';
 import 'calendar_page.dart';
 import 'daily_summary_page.dart';
 import 'navigation.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      home: HeartRateHRVScreen(),
       home: HomePage(),
     );
   }
