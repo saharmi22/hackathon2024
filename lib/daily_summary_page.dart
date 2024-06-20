@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
+import 'package:hive/hive.dart';
 
 class EventPage extends StatefulWidget {
   @override
@@ -12,6 +14,13 @@ class _EventPageState extends State<EventPage> {
   List<Map<String, String>> todaysEvents = [{'time': '', 'event': ''}];
   List<Map<String, String>> tomorrowsSchedule = [{'event': '', 'description': ''}];
   final snackBar = SnackBar(content: Text('Data saved for the day'));
+
+  @override
+  void initState() {
+    super.initState();
+    // Load data when the widget is initialized
+    _loadEvent();
+  }
 
   void _addTodaysEventRow() {
     setState(() {
@@ -101,18 +110,64 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "calmness_level": _calmLevel,
+      "stress_level": _stressLevel,
+      "Table Today": todaysEvents.map((event) => {
+        "time": event['time'],
+        "event": event['event']
+      }).toList(),
+      "Table Tomorrow": tomorrowsSchedule.map((schedule) => {
+        "event": schedule['event'],
+        "description": schedule['description']
+      }).toList()
+    };
+  }
+
+  Future<void> _saveEvent() async {
+    final formattedDate = _getFormattedDate();
+    final json = toJson();
+    await HiveEventDB().saveEvent(formattedDate, json);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<void> _loadEvent() async {
+    final formattedDate = _getFormattedDate();
+    var json = await HiveEventDB().getEvent(formattedDate);
+    if (json != null) {
+      setState(() {
+        _calmLevel = json['calmness_level'];
+        _stressLevel = json['stress_level'];
+        todaysEvents = List<Map<String, String>>.from(
+            json['Table Today'].map((event) => {
+              'time': event['time'],
+              'event': event['event']
+            })
+        );
+        tomorrowsSchedule = List<Map<String, String>>.from(
+            json['Table Tomorrow'].map((schedule) => {
+              'event': schedule['event'],
+              'description': schedule['description']
+            })
+        );
+      });
+    }
+  }
+
+  String _getFormattedDate() {
+    DateTime now = DateTime.now();
+    return DateFormat('EEEE, dd/MM/yyyy', 'en_US').format(now);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get current date
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEEE, dd/MM/yyyy', 'en_US').format(now);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(formattedDate),
+        title: Text(_getFormattedDate()),
       ),
       body: Container(
-        color: Colors.white, // Set background color to white
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -122,7 +177,7 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   'How calm were you today?',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 SizedBox(height: 8.0),
                 Row(
@@ -132,7 +187,7 @@ class _EventPageState extends State<EventPage> {
                       radius: 20,
                       backgroundColor: _calmLevel == index + 1 ? Colors.blue : Colors.grey,
                       child: IconButton(
-                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
+                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)),
                         onPressed: () {
                           setState(() {
                             _calmLevel = index + 1;
@@ -145,7 +200,7 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   'How stressed were you today?',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 SizedBox(height: 8.0),
                 Row(
@@ -155,7 +210,7 @@ class _EventPageState extends State<EventPage> {
                       radius: 20,
                       backgroundColor: _stressLevel == index + 1 ? Colors.blue : Colors.grey,
                       child: IconButton(
-                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
+                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)),
                         onPressed: () {
                           setState(() {
                             _stressLevel = index + 1;
@@ -168,7 +223,7 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   "Today's Events",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 SizedBox(height: 8.0),
                 Column(
@@ -188,12 +243,12 @@ class _EventPageState extends State<EventPage> {
                                   contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12.0),
-                                    borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+                                    borderSide: BorderSide(color: Colors.grey[800]!),
                                   ),
                                 ),
                                 child: Text(
-                                  'Time',
-                                  style: TextStyle(fontSize: 16.0, color: Colors.black87), // Black text color
+                                  event['time'] ?? 'Time',
+                                  style: TextStyle(fontSize: 16.0, color: Colors.black87),
                                 ),
                               ),
                             ),
@@ -207,20 +262,20 @@ class _EventPageState extends State<EventPage> {
                                   event['event'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.black87), // Black text color
+                              style: TextStyle(color: Colors.black87),
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+                                  borderSide: BorderSide(color: Colors.grey[800]!),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Event',
-                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]),
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
+                            icon: Icon(Icons.delete, color: Colors.grey[600]),
                             onPressed: () => _removeTodaysEventRow(index),
                           ),
                         ],
@@ -232,16 +287,16 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _addTodaysEventRow,
-                    child: Icon(Icons.add, color: Colors.white), // White icon color
+                    child: Icon(Icons.add, color: Colors.white),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Blue button color
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                     ),
                   ),
                 ),
                 SizedBox(height: 16.0),
                 Text(
                   "Tomorrow's Schedule",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
                 SizedBox(height: 8.0),
                 Column(
@@ -260,41 +315,41 @@ class _EventPageState extends State<EventPage> {
                                   schedule['event'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.black87), // Black text color
+                              style: TextStyle(color: Colors.black87),
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+                                  borderSide: BorderSide(color: Colors.grey[800]!),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Event',
-                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]),
                               ),
                             ),
                           ),
                           SizedBox(width: 16.0),
                           Expanded(
-                            flex: 2,
+                            flex: 3,
                             child: TextField(
                               onChanged: (text) {
                                 setState(() {
                                   schedule['description'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.black87), // Black text color
+                              style: TextStyle(color: Colors.black87),
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+                                  borderSide: BorderSide(color: Colors.grey[800]!),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Description',
-                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]),
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
+                            icon: Icon(Icons.delete, color: Colors.grey[600]),
                             onPressed: () => _removeTomorrowsScheduleRow(index),
                           ),
                         ],
@@ -306,18 +361,16 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _addTomorrowsScheduleRow,
-                    child: Icon(Icons.add, color: Colors.white), // White icon color
+                    child: Icon(Icons.add, color: Colors.white),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Blue button color
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                     ),
                   ),
                 ),
                 SizedBox(height: 16.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
+                    onPressed: _saveEvent,
                     child: Text('Save'),
                   ),
                 ),
@@ -327,5 +380,22 @@ class _EventPageState extends State<EventPage> {
         ),
       ),
     );
+  }
+}
+
+class HiveEventDB {
+  static const String boxName = 'events';
+
+  Future<void> saveEvent(String date, Map<String, dynamic> eventJson) async {
+    var box = await Hive.openBox(boxName);
+    await box.put(date, eventJson);
+    await box.close();
+  }
+
+  Future<Map<String, dynamic>?> getEvent(String date) async {
+    var box = await Hive.openBox(boxName);
+    var eventJson = box.get(date);
+    await box.close();
+    return eventJson;
   }
 }
