@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'calendar_page.dart';
 import 'daily_summary_page.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async{
+  await Hive.initFlutter();
+
+  var box;
+  if (!Hive.isBoxOpen('eventBox')) {
+    box = await Hive.openBox('eventBox');
+  } else {
+    box = Hive.box('eventBox');
+
+  }  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
