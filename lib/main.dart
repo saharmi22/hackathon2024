@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Daily Summary App',
       theme: ThemeData(
-        primaryColor: Color(0xFF4A6FA5), // Moonlit Blue
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.teal, // Pale Moon
+        ),
+        primaryColor: Colors.teal, // Moonlit Blue
         hintColor: Color.fromARGB(255, 139, 195, 169), // Deep Space Blue
         scaffoldBackgroundColor: Color.fromARGB(255, 223, 253, 247), // Deep Space Blue
         textTheme: TextTheme(

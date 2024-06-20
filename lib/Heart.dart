@@ -109,11 +109,11 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(7.0),
               child: Card(
                 elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -122,10 +122,10 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: Colors.teal,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         '${recentHeartRateData.last.toStringAsFixed(1)} bpm',
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
@@ -136,11 +136,11 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(7.0),
               child: Card(
                 elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,10 +149,10 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: Color.fromARGB(255, 156, 97, 74),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         '${recentHRVData.last.toStringAsFixed(1)} ms',
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
@@ -163,11 +163,11 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(7.0),
               child: Card(
                 elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -176,10 +176,10 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: Colors.teal,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         '${averageHeartRate.toStringAsFixed(1)} bpm',
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
@@ -190,11 +190,11 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(7.0),
               child: Card(
                 elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -203,10 +203,10 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: Color.fromARGB(255, 156, 97, 74),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         '${averageHRV.toStringAsFixed(1)} ms',
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
@@ -217,7 +217,7 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(16),
+              margin: EdgeInsets.all(7),
               height: 300,
               child: LineChart(
                 LineChartData(
@@ -290,7 +290,7 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                     LineChartBarData(
                       spots: List.generate(recentHeartRateData.length, (index) => FlSpot(index.toDouble(), recentHeartRateData[index])),
                       isCurved: true,
-                      colors: [Colors.blue],
+                      colors: [Colors.teal],
                       barWidth: 4,
                       isStrokeCapRound: true,
                       belowBarData: BarAreaData(show: false),
@@ -298,7 +298,7 @@ class _HeartRateHRVScreenState extends State<HeartRateHRVScreen> {
                     LineChartBarData(
                       spots: List.generate(recentHRVData.length, (index) => FlSpot(index.toDouble(), recentHRVData[index])),
                       isCurved: true,
-                      colors: [Colors.green],
+                      colors: [Color.fromARGB(255, 156, 97, 74)],
                       barWidth: 4,
                       isStrokeCapRound: true,
                       belowBarData: BarAreaData(show: false),

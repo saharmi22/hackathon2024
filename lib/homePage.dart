@@ -3,13 +3,47 @@ import 'package:hackathon2024/EntryFormCard.dart';
 import 'package:hackathon2024/EntryFormTile.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    
+    // Call a function to check your condition and show alert if necessary
+    _checkConditionToShowAlert();
+  }
+
+  void _checkConditionToShowAlert() {
+    bool shouldShowAlert = true; // Replace with your condition
+
+    if (shouldShowAlert) {
+      
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Alert"),
+              content: Text("According to our calculation, you need a rest day!"),
+              actions: <Widget>[
+                TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +58,13 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               child: EntryFormCardInit(),
             ),
-             Padding(
+            Padding(
               padding: EdgeInsets.all(10.0),
-              child: EntryFormTile(date: "12/12/2021"),
+              child: EntryFormTile(date: "19/06/2024 entry", avg: 7.4),
             ),
-             Padding(
+            Padding(
               padding: EdgeInsets.all(10.0),
-              child: EntryFormTile(date: "11/12/2021"),
+              child: EntryFormTile(date: "18/06/2024 entry", avg: 2.6),
             ),
           ],
         ),

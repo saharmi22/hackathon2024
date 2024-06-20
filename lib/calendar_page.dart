@@ -34,7 +34,7 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar Page'),
+        title: Text('Entries Calendar'),
       ),
       body: SingleChildScrollView(
         child: Column(

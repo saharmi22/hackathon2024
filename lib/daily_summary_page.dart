@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:hackathon2024/Breathings.dart';
 
 class EventPage extends StatefulWidget {
   @override
@@ -10,8 +11,12 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   int _calmLevel = 1;
   int _stressLevel = 1;
-  List<Map<String, String>> todaysEvents = [{'time': '', 'event': ''}];
-  List<Map<String, String>> tomorrowsSchedule = [{'event': '', 'description': ''}];
+  List<Map<String, String>> todaysEvents = [
+    {'time': '', 'event': ''}
+  ];
+  List<Map<String, String>> tomorrowsSchedule = [
+    {'event': '', 'description': ''}
+  ];
   final snackBar = SnackBar(content: Text('Data saved for the day'));
   Timer? _breathingTimer;
 
@@ -25,7 +30,6 @@ class _EventPageState extends State<EventPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        
         return AlertDialog(
           title: Text('Delete Event'),
           content: Text('Are you sure you want to delete this event?'),
@@ -201,6 +205,7 @@ class _EventPageState extends State<EventPage> {
                       _breathingTimer?.cancel();
                       Navigator.of(context).pop();
                     },
+                    icon: Icon(Icons.stop),
                     label: Text('Stop breathing exercise'),
                   ),
                 ],
@@ -210,7 +215,8 @@ class _EventPageState extends State<EventPage> {
         );
       },
     ).then((_) {
-      _breathingTimer?.cancel(); // Ensure timer is canceled when dialog is dismissed
+      _breathingTimer
+          ?.cancel(); // Ensure timer is canceled when dialog is dismissed
     });
   }
 
@@ -236,220 +242,266 @@ class _EventPageState extends State<EventPage> {
     String formattedDate = DateFormat('EEEE, dd/MM/yyyy', 'en_US').format(now);
 
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: Text(formattedDate),
-    ),
-    body: Container(
-    color: Colors.white, // Set background color to white
-    child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: SingleChildScrollView(
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    SizedBox(height: 16.0),
-    Text(
-    'How calm were you today?',
-    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
-    ),
-    SizedBox(height: 8.0),
-    Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: List.generate(6, (index) {
-    return CircleAvatar(
-    radius: 20,
-    backgroundColor: _calmLevel == index + 1 ? Colors.blue : Colors.grey,
-    child: IconButton(
-    icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
-    onPressed: () {
-    setState(() {
-    _calmLevel = index + 1;
-    });
-    },
-    ),
-    );
-    }),
-    ),
-    SizedBox(height: 16.0),
-    Text(
-    'How stressed were you today?',
-    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
-    ),
-    SizedBox(height: 8.0),
-    Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: List.generate(6, (index) {
-    return CircleAvatar(
-    radius: 20,
-    backgroundColor: _stressLevel == index + 1 ? Colors.blue : Colors.grey,
-    child: IconButton(
-    icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
-    onPressed: () {
-    setState(() {
-    _stressLevel = index + 1;
-    });
-    },
-    ),
-    );
-    }),
-    ),
-    SizedBox(height: 16.0),
-    Text(
-    "Today's Events",
-    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
-    ),
-    SizedBox(height: 8.0),
-    Column(
-    children: todaysEvents.asMap().entries.map((entry) {
-    int index = entry.key;
-    Map<String, String> event = entry.value;
-    return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Row(
-    children: [
-    Expanded(
-    flex: 1,
-    child: InkWell(
-    onTap: () => _selectTime(context, index),
-    child: InputDecorator(
-    decoration: InputDecoration(
-    contentPadding: EdgeInsets.symmetric(vertical:
-    12.0, horizontal: 16.0),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+        backgroundColor: Colors.teal,
       ),
-    ),
-      child: Text(
-        'Time', // Updated label "Time"
-        style: TextStyle(fontSize: 16.0, color: Colors.black87), // Black text color
-      ),
-    ),
-    ),
-    ),
-      SizedBox(width: 16.0),
-      Expanded(
-        flex: 3,
-        child: TextField(
-          onChanged: (text) {
-            setState(() {
-              event['event'] = text;
-            });
-          },
-          style: TextStyle(color: Colors.black87), // Black text color
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-              borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
+      body: Container(
+        color: Colors.white, // Set background color to white
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16.0),
+                Text(
+                  'How calm were you today?',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal), // Teal text color
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(6, (index) {
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                          _calmLevel == index + 1 ? Colors.teal : Colors.grey,
+                      child: IconButton(
+                        icon: Text('${index + 1}',
+                            style: TextStyle(
+                                color: Colors.white)), // White text color
+                        onPressed: () {
+                          setState(() {
+                            _calmLevel = index + 1;
+                          });
+                        },
+                      ),
+                    );
+                  }),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'How stressed were you today?',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal), // Teal text color
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(6, (index) {
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                          _stressLevel == index + 1 ? Colors.teal : Colors.grey,
+                      child: IconButton(
+                        icon: Text('${index + 1}',
+                            style: TextStyle(
+                                color: Colors.white)), // White text color
+                        onPressed: () {
+                          setState(() {
+                            _stressLevel = index + 1;
+                          });
+                        },
+                      ),
+                    );
+                  }),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Today's Events",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal), // Teal text color
+                ),
+                SizedBox(height: 8.0),
+                Column(
+                  children: todaysEvents.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    Map<String, String> event = entry.value;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () => _selectTime(context, index),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 16.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.teal,
+                                    ),
+                                  ),
+                                  labelText: 'Time',
+                                ),
+                                child: Text(
+                                  event['time']!,
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16.0),
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller:
+                                  TextEditingController(text: event['event']),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  event['event'] = newValue;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 16.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: BorderSide(color: Colors.teal),
+                                ),
+                                labelText: 'Event',
+                              ),
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                          SizedBox(width: 8.0),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => _removeTodaysEventRow(index),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 16.0),
+                Center(
+                  child: ElevatedButton.icon(
+                    icon: Icon(Icons.add),
+                    label: Text(''),
+                    onPressed: _addTodaysEventRow,
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 140, 201, 195),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Tomorrow's Schedule",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal), // Teal text color
+                ),
+                SizedBox(height: 8.0),
+                Column(
+                  children: tomorrowsSchedule.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    Map<String, String> schedule = entry.value;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller:
+                                  TextEditingController(text: schedule['event']),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  schedule['event'] = newValue;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 16.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: BorderSide(color: Colors.teal),
+                                ),
+                                labelText: 'Event',
+                              ),
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                          SizedBox(width: 16.0),
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller:
+                                  TextEditingController(text: schedule['event']),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  schedule['event'] = newValue;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 16.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderSide: BorderSide(color: Colors.teal),
+                                ),
+                                labelText: 'Description',
+                              ),
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                          SizedBox(width: 8.0),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => _removeTomorrowsScheduleRow(index),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 16.0),
+                Center(
+                  child: ElevatedButton.icon(
+                    icon: Icon(Icons.add),
+                    label: Text(''),
+                    onPressed: _addTomorrowsScheduleRow,
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 140, 201, 195),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BreathingExercisePage()),
+                      );
+                    },
+                    child: Text('Start Breathing Exercise'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 140, 201, 195),
+                      padding: EdgeInsets.symmetric(horizontal: 32.0),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+              ],
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-            hintText: 'Event',
-            hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
           ),
         ),
       ),
-      IconButton(
-        icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
-        onPressed: () => _removeTodaysEventRow(index),
-      ),
-    ],
-    ),
-    );
-    }).toList(),
-    ),
-      Align(
-        alignment: Alignment.centerRight,
-        child: IconButton(
-          onPressed: _addTodaysEventRow,
-          icon: Icon(Icons.add), // + icon
-        ),
-      ),
-      SizedBox(height: 16.0),
-      Text(
-        "Tomorrow's Schedule",
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
-      ),
-      SizedBox(height: 8.0),
-      Column(
-        children: tomorrowsSchedule.asMap().entries.map((entry) {
-          int index = entry.key;
-          Map<String, String> schedule = entry.value;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    onChanged: (text) {
-                      setState(() {
-                        schedule['event'] = text;
-                      });
-                    },
-                    style: TextStyle(color: Colors.black87), // Black text color
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                      hintText: 'Event',
-                      hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    onChanged: (text) {
-                      setState(() {
-                        schedule['description'] = text;
-                      });
-                    },
-                    style: TextStyle(color: Colors.black87), // Black text color
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.grey[800]!), // Darker border color
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                      hintText: 'Description',
-                      hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
-                  onPressed: () => _removeTomorrowsScheduleRow(index),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
-      Align(
-        alignment: Alignment.centerRight,
-        child: IconButton(
-          onPressed: _addTomorrowsScheduleRow,
-          icon: Icon(Icons.add), // + icon
-        ),
-      ),
-      SizedBox(height: 16.0),
-      Center(
-        child: ElevatedButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            _showBreathingExerciseDialog();
-          },
-          child: Text('Save'),
-        ),
-      ),
-    ],
-    ),
-    ),
-    ),
-    ),
     );
   }
 }

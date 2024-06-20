@@ -4,8 +4,9 @@ import 'package:hackathon2024/daily_summary_page.dart';
 
 class EntryFormTile extends StatelessWidget {
   final String date;
+  final double avg;
 
-  EntryFormTile({required this.date});
+  EntryFormTile({required this.date, required this.avg});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,10 @@ class EntryFormTile extends StatelessWidget {
         width: 390,
         height: 100,
         child: Card(
-          
+          elevation: 10,
           child: Column(
-            children: [Text(date, style: const TextStyle(fontWeight: FontWeight.bold))],
+            children: [Text(date, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text("Avg Event Rating: $avg", style: const TextStyle(fontSize: 20)),],
             mainAxisAlignment: MainAxisAlignment.center,
         ),
             ),

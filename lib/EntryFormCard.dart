@@ -20,8 +20,10 @@ class _EntryFormCardInitState extends State<EntryFormCardInit> {
         height: 300,
         width: 390,
         child: Card(
+          elevation: 10,
           child: Column(
             children: <Widget>[
+              Padding(padding: const EdgeInsets.all(8.0), child: Text("\n", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Padding(
@@ -29,7 +31,7 @@ class _EntryFormCardInitState extends State<EntryFormCardInit> {
                   child: Text("Today: $day/$month/$year", style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                 ),
               ),
-              const Text("How are you feeling today?", style: TextStyle(fontSize: 20)),
+              const Text("Tap to document your day", style: TextStyle(fontSize: 20)),
             ]
           ),
         ),
