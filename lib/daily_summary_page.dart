@@ -7,8 +7,8 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
-  String _calmLevel = '1';
-  String _stressLevel = '1';
+  int _calmLevel = 1;
+  int _stressLevel = 1;
   List<Map<String, String>> todaysEvents = [{'time': '', 'event': ''}];
   List<Map<String, String>> tomorrowsSchedule = [{'event': '', 'description': ''}];
   final snackBar = SnackBar(content: Text('Data saved for the day'));
@@ -112,9 +112,7 @@ class _EventPageState extends State<EventPage> {
         title: Text(formattedDate),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[900], // Dark background color
-        ),
+        color: Colors.white, // Set background color to white
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -124,32 +122,22 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   'How calm were you today?',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white), // White text color
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
                 ),
                 SizedBox(height: 8.0),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 8.0,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(6, (index) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _calmLevel = (index + 1).toString();
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: _calmLevel == (index + 1).toString() ? Colors.blue : Colors.grey[700], // Darker grey
-                        ),
-                        child: Text(
-                          (index + 1).toString(),
-                          style: TextStyle(
-                            color: _calmLevel == (index + 1).toString() ? Colors.white : Colors.white70, // White text or lighter grey
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundColor: _calmLevel == index + 1 ? Colors.blue : Colors.grey,
+                      child: IconButton(
+                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
+                        onPressed: () {
+                          setState(() {
+                            _calmLevel = index + 1;
+                          });
+                        },
                       ),
                     );
                   }),
@@ -157,32 +145,22 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   'How stressed were you today?',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white), // White text color
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
                 ),
                 SizedBox(height: 8.0),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 8.0,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(6, (index) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _stressLevel = (index + 1).toString();
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: _stressLevel == (index + 1).toString() ? Colors.blue : Colors.grey[700], // Darker grey
-                        ),
-                        child: Text(
-                          (index + 1).toString(),
-                          style: TextStyle(
-                            color: _stressLevel == (index + 1).toString() ? Colors.white : Colors.white70, // White text or lighter grey
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundColor: _stressLevel == index + 1 ? Colors.blue : Colors.grey,
+                      child: IconButton(
+                        icon: Text('${index + 1}', style: TextStyle(color: Colors.white)), // White text color
+                        onPressed: () {
+                          setState(() {
+                            _stressLevel = index + 1;
+                          });
+                        },
                       ),
                     );
                   }),
@@ -190,7 +168,7 @@ class _EventPageState extends State<EventPage> {
                 SizedBox(height: 16.0),
                 Text(
                   "Today's Events",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white), // White text color
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
                 ),
                 SizedBox(height: 8.0),
                 Column(
@@ -215,7 +193,7 @@ class _EventPageState extends State<EventPage> {
                                 ),
                                 child: Text(
                                   'Time',
-                                  style: TextStyle(fontSize: 16.0, color: Colors.white), // White text color
+                                  style: TextStyle(fontSize: 16.0, color: Colors.black87), // Black text color
                                 ),
                               ),
                             ),
@@ -229,7 +207,7 @@ class _EventPageState extends State<EventPage> {
                                   event['event'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.white), // White text color
+                              style: TextStyle(color: Colors.black87), // Black text color
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
@@ -237,12 +215,12 @@ class _EventPageState extends State<EventPage> {
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Event',
-                                hintStyle: TextStyle(color: Colors.white70), // Lighter grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.white70), // Lighter grey icon color
+                            icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
                             onPressed: () => _removeTodaysEventRow(index),
                           ),
                         ],
@@ -254,13 +232,16 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _addTodaysEventRow,
-                    child: Icon(Icons.add),
+                    child: Icon(Icons.add, color: Colors.white), // White icon color
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Blue button color
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.0),
                 Text(
                   "Tomorrow's Schedule",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white), // White text color
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87), // Black text color
                 ),
                 SizedBox(height: 8.0),
                 Column(
@@ -279,7 +260,7 @@ class _EventPageState extends State<EventPage> {
                                   schedule['event'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.white), // White text color
+                              style: TextStyle(color: Colors.black87), // Black text color
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
@@ -287,7 +268,7 @@ class _EventPageState extends State<EventPage> {
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Event',
-                                hintStyle: TextStyle(color: Colors.white70), // Lighter grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
                               ),
                             ),
                           ),
@@ -300,7 +281,7 @@ class _EventPageState extends State<EventPage> {
                                   schedule['description'] = text;
                                 });
                               },
-                              style: TextStyle(color: Colors.white), // White text color
+                              style: TextStyle(color: Colors.black87), // Black text color
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
@@ -308,12 +289,12 @@ class _EventPageState extends State<EventPage> {
                                 ),
                                 contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                                 hintText: 'Description',
-                                hintStyle: TextStyle(color: Colors.white70), // Lighter grey hint text color
+                                hintStyle: TextStyle(color: Colors.grey[600]), // Light grey hint text color
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.white70), // Lighter grey icon color
+                            icon: Icon(Icons.delete, color: Colors.grey[600]), // Light grey icon color
                             onPressed: () => _removeTomorrowsScheduleRow(index),
                           ),
                         ],
@@ -325,7 +306,10 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _addTomorrowsScheduleRow,
-                    child: Icon(Icons.add),
+                    child: Icon(Icons.add, color: Colors.white), // White icon color
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Blue button color
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.0),
