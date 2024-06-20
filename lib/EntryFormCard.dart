@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon2024/homePage.dart';
+import 'package:hackathon2024/daily_summary_page.dart';
 
 class EntryFormCardInit extends StatefulWidget {
   const EntryFormCardInit({super.key});
@@ -36,7 +37,7 @@ class _EntryFormCardInitState extends State<EntryFormCardInit> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()), //todo: change to FormPage
+          MaterialPageRoute(builder: (context) => EventPage()), //todo: change to FormPage
         );
       },
     );
@@ -71,7 +72,7 @@ class _EntryFormCardUpdateState extends State<EntryFormCardUpdate> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()), //todo: change to FormPage
+          MaterialPageRoute(builder: (context) => EventPage()), //todo: change to FormPage
         );
       },
     );

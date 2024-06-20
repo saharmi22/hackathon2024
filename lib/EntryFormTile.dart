@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon2024/homePage.dart';
+import 'package:hackathon2024/daily_summary_page.dart';
 
 class EntryFormTile extends StatelessWidget {
   final String date;
@@ -23,7 +24,7 @@ class EntryFormTile extends StatelessWidget {
     onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()), //todo: change to FormPage
+        MaterialPageRoute(builder: (context) => EventPage()), //todo: change to FormPage AND pass date as argument
       );
       },
     );

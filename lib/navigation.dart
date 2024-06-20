@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:hackathon2024/calendar_page.dart';
 import 'package:hackathon2024/daily_summary_page.dart';
+import 'package:hackathon2024/homePage.dart';
+import 'package:hackathon2024/Heart.dart';
 
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePageNavigator extends StatefulWidget {
+  const HomePageNavigator({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageNavigatorState createState() => _HomePageNavigatorState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageNavigatorState extends State<HomePageNavigator> {
   int _currentIndex = 0;
-  final _pages = [EventPage(), CalendarPage()];
+  final _pages = [HomePage(), CalendarPage(), HeartRateHRVScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,9 @@ class _HomePageState extends State<HomePage> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: const Icon(Icons.menu_book),
+            icon: const Icon(Icons.home),
             //make the title in the center
-            title: const Text('EventPage', textAlign: TextAlign.center),
+            title: const Text('Home', textAlign: TextAlign.center),
             activeColor: const Color.fromRGBO(109, 182, 214, 1),
           ),
           BottomNavyBarItem(
@@ -37,7 +39,12 @@ class _HomePageState extends State<HomePage> {
             title: const Text('CalendarPage', textAlign: TextAlign.center),
             activeColor: const Color.fromRGBO(109, 182, 214, 1),
           ),
-          
+          BottomNavyBarItem(
+            icon: const Icon(Icons.favorite),
+            //make the title in the center
+            title: const Text('Heart', textAlign: TextAlign.center),
+            activeColor: const Color.fromRGBO(109, 182, 214, 1),
+          ),
         ],
       ),
     );

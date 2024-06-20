@@ -23,6 +23,7 @@ class _EventPageState extends State<EventPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        
         return AlertDialog(
           title: Text('Delete Event'),
           content: Text('Are you sure you want to delete this event?'),
@@ -108,6 +109,7 @@ class _EventPageState extends State<EventPage> {
     String formattedDate = DateFormat('EEEE, dd/MM/yyyy', 'en_US').format(now);
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 223, 253, 247),
       appBar: AppBar(
         title: Text(formattedDate),
       ),
